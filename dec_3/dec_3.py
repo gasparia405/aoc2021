@@ -9,7 +9,6 @@ def get_least_common_bit(bit_list: list, index: int) -> int:
 diagnoses = list()
 with open("./dec_3/dec3_input.txt") as f:
     diagnoses = [x for x in f.read().split('\n')]
-print(len(diagnoses))
 
 # Task 1
 gamma_result = ""
