@@ -15,6 +15,11 @@ def find_winning_card(bingo_card: list, draw_list: list) -> bool:
             return True
     return False
 
+def calculate_final_value(bingo_card: list, draw_list: list) -> int:
+    flattened_card = sorted([int(item) for row in bingo_card for item in row])
+    leftovers = [item for item in flattened_card if str(item) not in draw_list]
+    return sum(leftovers) * int(draw_list[-1])
+
 # Import data
 # Bingo numbers and bingo cards are split by \n\n
 bingo_objects = list()
@@ -36,10 +41,8 @@ for number in bingo_draws:
     drawn_numbers.append(number)
     for bingo_card in bingo_cards:
         if find_winning_card(bingo_card=bingo_card, draw_list=drawn_numbers):
-            flattened_card = sorted([int(item) for row in bingo_card for item in row])
-            leftovers = [item for item in flattened_card if str(item) not in drawn_numbers]
             print(bingo_card, drawn_numbers, sep='\n')
-            print(sum(leftovers) * int(drawn_numbers[-1]))
+            print(calculate_final_value(bingo_card, drawn_numbers))
             break
     else:
         continue
@@ -58,7 +61,5 @@ for number in bingo_draws:
     for card in cards_to_pop[::-1]:
         bingo_cards.pop(card)
 
-flattened_card = sorted([int(item) for row in last_card_to_win for item in row])
-leftovers = [item for item in flattened_card if str(item) not in last_winning_num]
 print(last_card_to_win, last_winning_num, sep='\n')
-print(sum(leftovers) * int(last_winning_num[-1]))
+print(calculate_final_value(last_card_to_win, last_winning_num))
